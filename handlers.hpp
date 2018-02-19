@@ -2,7 +2,7 @@
  *
  * Future Camp Project
  *
- * Copyright (C) 2017-2018 Sergey Denisov.
+ * Copyright (C) 2018 Sergey Denisov.
  * Written by Sergey Denisov aka LittleBuster (DenisovS21@gmail.com)
  *
  * This library is free software; you can redistribute it and/or
@@ -12,26 +12,25 @@
  *
  *****************************************************************************/
 
-#include "path.hpp"
+#ifndef HANDLERS_HPP
+#define HANDLERS_HPP
+
+#include <string>
+
+using namespace std;
 
 
-Path &Path::getInstance()
-{
-    static Path path;
-    return path;
-}
+#define HANDLERS_COUNT 6
 
-const string &Path::getPath(const string &name)
-{
-    return paths_[name];
-}
 
-Path::Path()
-{
-    paths_.insert(make_pair("log", "/var/log/fcvision.log"));
-    paths_.insert(make_pair("cfg", "/etc/fcvision.conf"));
-}
+static string httpHandlers[HANDLERS_COUNT] = {
+    "/403",
+    "/404",
+    "/sys",
+    "/cam",
+    "/photo",
+    "/"
+};
 
-Path::~Path()
-{
-}
+
+#endif
