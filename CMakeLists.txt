@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(fchouse)
+project(fcvision)
 
 
 include_directories(".")
@@ -38,6 +38,7 @@ set(SRC_LIST net/http/httpserver.cpp net/http/httpserver.hpp
              threadmanager.cpp threadmanager.hpp
              app.cpp app.hpp
              imodule.hpp
+             handlers.hpp
              path.cpp path.hpp
              platform.hpp
              main.cpp)
@@ -45,5 +46,5 @@ set(SRC_LIST net/http/httpserver.cpp net/http/httpserver.hpp
 
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 target_link_libraries(${PROJECT_NAME} -lpthread -ljansson -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_videoio)
-install(FILES fchouse.conf DESTINATION "/etc/")
-install(FILES fchouse DESTINATION "/usr/share/futcamp/")
+install(FILES fcvision.conf DESTINATION "/etc/")
+install(FILES fcvision DESTINATION "/usr/share/futcamp/")

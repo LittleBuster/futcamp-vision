@@ -25,7 +25,7 @@
 
 int main(void)
 {
-    /*auto locker = make_shared<Locker>();
+    auto locker = make_shared<Locker>();
     auto tmanager = make_shared<ThreadManager>();
     auto cam = make_shared<Camera>();
     auto sys = make_shared<System>();
@@ -35,7 +35,5 @@ int main(void)
     auto hmaker = make_shared<HandlersMaker>(log, cfg, cam, sys);
     auto app = make_shared<App>(log, cfg, hmaker, tmanager, server, locker);
 
-    return app->start();*/
-
-
+    return app->start();
 }
