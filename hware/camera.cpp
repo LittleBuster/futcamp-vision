@@ -14,8 +14,6 @@
 
 #include "camera.hpp"
 
-#include <opencv/highgui.h>
-
 
 bool Camera::open(unsigned number)
 {
