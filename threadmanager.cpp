@@ -2,7 +2,7 @@
  *
  * Future Camp Project
  *
- * Copyright (C) 2017 Sergey Denisov.
+ * Copyright (C) 2017-2018 Sergey Denisov.
  * Written by Sergey Denisov aka LittleBuster (DenisovS21@gmail.com)
  *
  * This library is free software; you can redistribute it and/or
@@ -24,9 +24,9 @@ void ThreadManager::addModule(const shared_ptr<IModule> &module)
 
 void ThreadManager::startAll()
 {
-    for (auto mod : modules_) {
+    for (auto mod : modules_)
         threads_.push_back(make_shared<thread>(bind(&ThreadManager::startThread, this, mod)));
-    }
+
     for (auto th : threads_)
         th->join();
 }
