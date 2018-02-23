@@ -17,6 +17,7 @@ set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pedantic -Wextra -Wall -O2")
 set(SRC_LIST net/http/httpserver.cpp net/http/httpserver.hpp
              net/http/httpclient.cpp net/http/httpclient.hpp
+             net/http/pageparser.cpp net/http/pageparser.hpp
              net/tcp/tcpserver.cpp net/tcp/tcpserver.hpp
              net/tcp/tcpclient.cpp net/tcp/tcpclient.hpp
              net/deviceserver.cpp net/deviceserver.hpp
@@ -28,6 +29,7 @@ set(SRC_LIST net/http/httpserver.cpp net/http/httpserver.hpp
              net/handlers/photohandler.cpp net/handlers/photohandler.hpp
              net/handlers/handlersmaker.cpp net/handlers/handlersmaker.hpp
              net/handlers/ihandler.hpp
+             net/handlers/handlers.hpp
              sys/system.cpp sys/system.hpp
              utils/log.cpp utils/log.hpp
              utils/locker.cpp utils/locker.hpp
@@ -38,7 +40,6 @@ set(SRC_LIST net/http/httpserver.cpp net/http/httpserver.hpp
              threadmanager.cpp threadmanager.hpp
              app.cpp app.hpp
              imodule.hpp
-             handlers.hpp
              path.cpp path.hpp
              platform.hpp
              main.cpp)
@@ -47,4 +48,5 @@ set(SRC_LIST net/http/httpserver.cpp net/http/httpserver.hpp
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 target_link_libraries(${PROJECT_NAME} -lpthread -ljansson -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_videoio)
 install(FILES fcvision.conf DESTINATION "/etc/")
-install(FILES fcvision DESTINATION "/usr/share/futcamp/")
+install(FILES fcvision DESTINATION "/usr/share/fcvision/")
+install(FILES templates/index.html DESTINATION "/usr/share/fcvision/templates/")

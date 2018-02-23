@@ -30,6 +30,7 @@ Path::Path()
 {
     paths_.insert(make_pair("log", "/var/log/fcvision.log"));
     paths_.insert(make_pair("cfg", "/etc/fcvision.conf"));
+    paths_.insert(make_pair("IndexPage", "/usr/share/fcvision/templates/index.html"));
 }
 
 Path::~Path()
