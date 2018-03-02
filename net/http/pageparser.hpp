@@ -23,6 +23,9 @@
 using namespace std;
 
 
+#define HTML_STRING_LEN 4096
+
+
 class PageLoader
 {
 public:

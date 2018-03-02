@@ -15,10 +15,12 @@
 #include "pageparser.hpp"
 #include "utils.hpp"
 
+#include <string.h>
+
 
 PageLoader::PageLoader(const string &filename, string &buf)
 {
-    string line;
+    char line[HTML_STRING_LEN];
     buf = "";
 
     file_.open(filename, ios::in);
@@ -28,8 +30,9 @@ PageLoader::PageLoader(const string &filename, string &buf)
     }
 
     while (!file_.eof()) {
-        file_ >> line;
-        buf = buf + line;
+        memset(line, 0x0, HTML_STRING_LEN);
+        file_.read(line, HTML_STRING_LEN);
+        buf += string(line);
     }
 }
 
