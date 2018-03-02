@@ -1,4 +1,4 @@
-apt install clang cmake libopencv-dev libjansson-dev
+apt install clang cmake libopencv-dev libjansson-dev --yes
 
 cmake .
 
