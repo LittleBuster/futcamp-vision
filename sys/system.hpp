@@ -15,6 +15,10 @@
 #ifndef SYSTEM_HPP
 #define SYSTEM_HPP
 
+#include <string>
+
+using namespace std;
+
 
 class ISystem
 {
@@ -22,6 +26,9 @@ public:
     virtual void reboot() = 0;
     virtual void powerOff() = 0;
     virtual bool getCpuTemp(int &temp) = 0;
+    virtual bool getRamSize(int &total, int &used) = 0;
+    virtual bool getDiskSpace(string &total, string &used) = 0;
+    virtual bool getUptime(string &uptime) = 0;
     virtual void switchPowerLed(bool state) = 0;
     virtual void switchStatusLed(bool state) = 0;
 };
@@ -49,6 +56,38 @@ public:
      * @return false If fail to read
      */
     bool getCpuTemp(int &temp);
+
+    /**
+     * @brief Get RAM total and used size
+     *
+     * @param total Total RAM memory
+     * @param used Used RAM memory
+     *
+     * @return true If readed
+     * @return false If fail to read
+     */
+    bool getRamSize(int &total, int &used);
+
+    /**
+     * @brief Get disk total and used space
+     *
+     * @param total Total disk space
+     * @param used Used disk space
+     *
+     * @return true If readed
+     * @return false If fail to read
+     */
+    bool getDiskSpace(string &total, string &used);
+
+    /**
+     * @brief Get system uptime
+     *
+     * @param uptime System uptime
+     *
+     * @return true If readed
+     * @return false If fail to read
+     */
+    bool getUptime(string &uptime);
 
     /**
      * @brief Switching power onboard led
