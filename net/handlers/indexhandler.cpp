@@ -29,7 +29,8 @@ IndexHandler::IndexHandler(const shared_ptr<ILog> &log,
 bool IndexHandler::process(const shared_ptr<IHttpClient> &client, const string &request)
 {
     (void)request;
-    int temp;
+    int temp, totalMem, usedMem;
+    string totalDisk, usedDisk, uptime;
     string outPage;
     unsigned camCount = cam_->getCamCount();
 
@@ -41,11 +42,26 @@ bool IndexHandler::process(const shared_ptr<IHttpClient> &client, const string &
     }
 
     if (!sys_->getCpuTemp(temp))
-        parser->setValue(0, "<font color=\"red\">fail</font>");
+        parser->setValue(0, "<font color=\"red\">Error</font>");
     else
         parser->setValue(0, to_string(temp));
 
-    parser->setValue(1, to_string(camCount));
+    if (!sys_->getRamSize(totalMem, usedMem))
+        parser->setValue(1, "<font color=\"red\">Error</font>");
+    else
+        parser->setValue(1, to_string(usedMem) + "/" + to_string(totalMem));
+
+    if (!sys_->getDiskSpace(totalDisk, usedDisk))
+        parser->setValue(2, "<font color=\"red\">Error</font>");
+    else
+        parser->setValue(2, usedDisk + "/" + totalDisk);
+
+    if (!sys_->getUptime(uptime))
+        parser->setValue(3, "<font color=\"red\">Error</font>");
+    else
+        parser->setValue(3, uptime);
+
+    parser->setValue(4, to_string(camCount));
     parser->buildPage(outPage);
 
     if (!client->sendTextResponse(outPage, HTTP_OK))
