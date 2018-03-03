@@ -16,6 +16,8 @@
 
 #include <fstream>
 
+#include <unistd.h>
+
 
 HttpClient::HttpClient()
 {
@@ -106,6 +108,7 @@ bool HttpClient::sendImageResponse(const string &filename)
     }
 
     while (!file.eof()) {
+        usleep(100);
         file.read(buf, 512);
         if (!TcpClient::send(buf, 512)) {
             file.close();

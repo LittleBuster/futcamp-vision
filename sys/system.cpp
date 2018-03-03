@@ -37,14 +37,14 @@ bool System::getCpuTemp(int &temp)
 #ifdef ORAGNE_PI_PLATFORM
     char buf[256];
 
-    system("cat /sys/class/thermal/thermal_zone0/temp >> /tmp/temp");
+    system("cat /sys/class/thermal/thermal_zone0/temp > /tmp/temp");
 
     ifstream file("/tmp/temp");
     if (!file.is_open())
         return false;
 
     file.getline(buf, 255);
-    temp = stoi(string(buf)) / 1000;
+    temp = stoi(string(buf));
 
     file.close();
     return true;
