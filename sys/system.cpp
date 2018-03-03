@@ -112,31 +112,21 @@ bool System::getDiskSpace(string &total, string &used)
 bool System::getUptime(string &uptime)
 {
 #ifdef ORAGNE_PI_PLATFORM
-    string line;
-    vector<string> parts, time;
+    char line[255];
+    vector<string> time;
 
-    system("uptime > /tmp/up");
+    system("uptime -p > /tmp/up");
 
     ifstream file("/tmp/up");
     if (!file.is_open())
         return false;
 
-    for (unsigned i = 0; i < 3; i++)
-        file >> line;
-
+    file.getline(line, 255);
     file.close();
-
-    if (!splitString(parts, line, ","))
-        return false;
-    if (parts.size() == 0)
-        return false;
-    if (!splitString(time, parts[0], ":"))
-        return false;
-    if (time.size() < 2)
+    if (!splitString(time, string(line), "up "))
         return false;
 
-    uptime = time[0] + "h" + time[1] + "m";
-
+    uptime = time[1];
     return true;
 #elif
     return false;
