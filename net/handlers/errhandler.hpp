@@ -16,11 +16,14 @@
 #define ERROR_HANDLER_HPP
 
 #include "ihandler.hpp"
+#include "log.hpp"
 
 
 class ErrorHandler: public IHandler
 {
 public:
+    ErrorHandler(const shared_ptr<ILog> &log);
+
     /**
      * @brief Process request
      *
@@ -31,6 +34,9 @@ public:
      * @return false if fail to process request
      */
     bool process(const shared_ptr<IHttpClient> &client, const string &request);
+
+private:
+    const shared_ptr<ILog> log_;
 };
 
 

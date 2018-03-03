@@ -33,7 +33,6 @@ bool IndexHandler::process(const shared_ptr<IHttpClient> &client, const string &
     string totalDisk, usedDisk, uptime;
     string outPage;
     unsigned camCount = cam_->getCamCount();
-
     auto parser = make_shared<PageParser>();
 
     if (!parser->loadFromFile(Path::getInstance().getPath("IndexPage"))) {

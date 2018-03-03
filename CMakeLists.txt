@@ -50,3 +50,6 @@ target_link_libraries(${PROJECT_NAME} -lpthread -ljansson -lopencv_core -lopencv
 install(FILES fcvision.conf DESTINATION "/etc/")
 install(FILES fcvision DESTINATION "/usr/share/fcvision/")
 install(FILES templates/index.html DESTINATION "/usr/share/fcvision/templates/")
+install(FILES templates/photo.html DESTINATION "/usr/share/fcvision/templates/")
+install(FILES templates/403.html DESTINATION "/usr/share/fcvision/templates/")
+install(FILES templates/404.html DESTINATION "/usr/share/fcvision/templates/")

@@ -34,6 +34,7 @@ PageLoader::PageLoader(const string &filename, string &buf)
         file_.read(line, HTML_STRING_LEN);
         buf += string(line);
     }
+    setLoadStatus(true);
 }
 
 PageLoader::~PageLoader()
@@ -46,18 +47,15 @@ PageLoader::~PageLoader()
 bool PageParser::loadFromFile(const string &filename)
 {
     unsigned paramsCount;
-    string pageContent;
-    PageLoader loader(filename, pageContent);
+    PageLoader loader(filename, pageContent_);
 
     if (!loader.getLoadStatus()) {
-        error_ = "Fail to load page content";
+        error_ = "Page have not params";
         return false;
     }
 
-    if (!splitString(parts_, pageContent, "<%PARAM%>")) {
-        error_ = "Fail to split page content by params";
-        return false;
-    }
+    if (!splitString(parts_, pageContent_, "<%PARAM%>"))
+        return true;
 
     paramsCount = parts_.size() - 1;
     for (unsigned i = 0; i < paramsCount; i++)

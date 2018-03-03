@@ -13,14 +13,26 @@
  *****************************************************************************/
 
 #include "errhandler.hpp"
+#include "pageparser.hpp"
+#include "path.hpp"
 
+
+ErrorHandler::ErrorHandler(const shared_ptr<ILog> &log):
+                           log_(std::move(log))
+{
+}
 
 bool ErrorHandler::process(const shared_ptr<IHttpClient> &client, const string &request)
 {
     (void)request;
-    string body = "<html><body><h1>403<br>Forbidden</h1></body></html>";
+    auto parser = make_shared<PageParser>();
 
-    if (!client->sendTextResponse(body, HTTP_FORBIDDEN))
+    if (!parser->loadFromFile(Path::getInstance().getPath("ErrorPage"))) {
+        log_->error("Load 403.html failed: " + parser->getLastError(), "ERROR");
+        return false;
+    }
+
+    if (!client->sendTextResponse(parser->getFullPage(), HTTP_FORBIDDEN))
         return false;
 
     return true;

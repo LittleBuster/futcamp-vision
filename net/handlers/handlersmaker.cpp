@@ -35,9 +35,9 @@ HandlersMaker::HandlersMaker(const shared_ptr<ILog> &log,
 shared_ptr<IHandler> HandlersMaker::makeHandler(const string &name)
 {
     if (name == "/404")
-        return make_shared<NotFoundHandler>();
+        return make_shared<NotFoundHandler>(log_);
     if (name == "/403")
-        return make_shared<ErrorHandler>();
+        return make_shared<ErrorHandler>(log_);
     if (name == "/")
         return make_shared<IndexHandler>(log_, cam_, sys_);
     if (name == "/sys")

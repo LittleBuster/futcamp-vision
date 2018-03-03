@@ -7,13 +7,6 @@
 				margin: 0;
 				background: #F4F1F8;
 			}
-			table {
-				border-collapse: collapse;
-				line-height: 1.1;
-				font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-				background:  radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
-				color: #0C213B;
-			}
 			caption {
 				font-family: annabelle, cursive;
 				font-weight: bold;
@@ -26,15 +19,6 @@
 				content: "\274B";
 				color: #A9E2CC;
 				margin: 0 10px;
-			}
-			th {
-				padding: 10px;
-				border: 1px solid #A9E2CC;
-			}
-			td {
-				font-size: 0.8em;
-				padding: 5px 7px;
-				border: 1px solid #A9E2CC;
 			}
 			.first {
 				font-size: 1em;
@@ -77,26 +61,14 @@
 	</head>
 	<body>
 		<center>
-			<h1>Future Camp Vision</h1>
-			<table>
-				<tr><th colspan="2">Система</th></tr>
-				<tr><td><center>CPU temp</center></td><td><center><%PARAM%>°C</center></td></tr>
-				<tr><td><center>RAM used</center></td><td><center><%PARAM%>mb</center></td></tr>
-				<tr><td><center>Disk space</center></td><td><center><%PARAM%></center></td></tr>
-				<tr><td><center>Uptime</center></td><td><center><%PARAM%></center></td></tr>
-			</table>
+			<h1>Фото с камер</h1>
+			<%PARAM%>
 			<br>
-			<table>
-				<tr><th colspan="2">Камеры</th></tr>
-				<tr><td><center>Количество</center></td><td><center><%PARAM%></center></td></tr>
-			</table>
-			<br>
-			<a href="/photo" class="button13">Смотреть</a>
-			<a href="/sys?cmd=reboot" class="button13">Перезагрузка</a>
-			<a href="/sys?cmd=poweroff" class="button13">Выключение</a>
+			<a href="/" class="button13">Назад</a>
 			<br>
 			<br>
 			<a>Denisov Foundation Ltd. © 2018</a>
+			<br>
 		</center>
 	</body>
 </html>

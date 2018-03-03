@@ -93,6 +93,13 @@ public:
     inline void setValue(unsigned paramIndex, const string &value) { params_[paramIndex] = value; }
 
     /**
+     * @brief Get full page content
+     *
+     * @return page
+     */
+    inline const string &getFullPage() { return pageContent_; }
+
+    /**
      * @brief Get last error
      *
      * @return Error string
@@ -102,6 +109,7 @@ public:
 private:
     vector<string> parts_;
     vector<string> params_;
+    string pageContent_;
     string error_;
 };
 

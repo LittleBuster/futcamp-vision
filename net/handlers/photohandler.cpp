@@ -13,6 +13,8 @@
  *****************************************************************************/
 
 #include "photohandler.hpp"
+#include "pageparser.hpp"
+#include "path.hpp"
 
 
 PhotoHandler::PhotoHandler(const shared_ptr<ILog> &log,
@@ -22,28 +24,32 @@ PhotoHandler::PhotoHandler(const shared_ptr<ILog> &log,
                            cfg_(std::move(cfg)),
                            cam_(std::move(cam))
 {
-
 }
 
 bool PhotoHandler::process(const shared_ptr<IHttpClient> &client, const string &request)
 {
     (void)request;
     unsigned camCount = cam_->getCamCount();
+    auto parser = make_shared<PageParser>();
+    string imgList = "";
+    string outPage;
 
-    string body = "<html><body><center><h1>Фото с камер<br>";
-    body += "<a href=\"/\">Назад</a><br>";
+    if (!parser->loadFromFile(Path::getInstance().getPath("PhotoPage"))) {
+        log_->error("Load 403.html failed: " + parser->getLastError(), "ERROR");
+        return false;
+    }
 
     auto pc = cfg_->getPhoto();
 
     for (unsigned i = 0; i < camCount; i++) {
-        body += "Cam " + to_string(i) + "<br>";
-        body += "<img width=\"" + to_string(pc.width) + "\" height=\""
-             + to_string(pc.height) + "\" src=\"/cam?dev=" + to_string(i) + "\" /><br>";
+        imgList += "<a><b>Camera " + to_string(i) + "</b></a><br><br>";
+        imgList += "<img width=\"" + to_string(pc.width) + "\" height=\""
+                + to_string(pc.height) + "\" src=\"/cam?dev=" + to_string(i) + "\" /><br>";
     }
-    body += "<a href=\"/\">Назад</a><br>";
-    body += "</h1></center></body></html>";
+    parser->setValue(0, imgList);
+    parser->buildPage(outPage);
 
-    if (!client->sendTextResponse(body, HTTP_OK))
+    if (!client->sendTextResponse(outPage, HTTP_OK))
         return false;
 
     return true;
