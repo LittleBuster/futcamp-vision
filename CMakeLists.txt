@@ -46,7 +46,7 @@ set(SRC_LIST net/http/httpserver.cpp net/http/httpserver.hpp
 
 
 add_executable(${PROJECT_NAME} ${SRC_LIST})
-target_link_libraries(${PROJECT_NAME} -lpthread -ljansson -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_videoio)
+target_link_libraries(${PROJECT_NAME} -lpthread -ljansson -lopencv_core -lopencv_highgui -lopencv_imgproc)
 install(FILES fcvision.conf DESTINATION "/etc/")
 install(FILES fcvision DESTINATION "/usr/share/fcvision/")
 install(FILES templates/index.html DESTINATION "/usr/share/fcvision/templates/")
