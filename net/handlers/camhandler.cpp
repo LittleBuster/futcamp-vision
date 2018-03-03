@@ -14,6 +14,8 @@
 
 #include "camhandler.hpp"
 #include "utils.hpp"
+#include "pageparser.hpp"
+#include "path.hpp"
 
 #include <vector>
 
@@ -27,9 +29,9 @@ CameraHandler::CameraHandler(const shared_ptr<ILog> &log,
 
 bool CameraHandler::process(const shared_ptr<IHttpClient> &client, const string &request)
 {
-    string body;
     vector<string> parts;
     unsigned cam;
+    auto parser = make_shared<PageParser>();
 
     if (!splitString(parts, request, "="))
         return false;
@@ -39,16 +41,22 @@ bool CameraHandler::process(const shared_ptr<IHttpClient> &client, const string 
     cam = stoi(parts[1]);
 
     if (!cam_->open(cam)) {
-        body = "<html><body><h1><font color=\"red\">Device not found</font></h1></body></html>";
-        if (!client->sendTextResponse(body, HTTP_FORBIDDEN))
+        if (!parser->loadFromFile(Path::getInstance().getPath("ErrorPage"))) {
+            log_->error("Load 403.html failed: " + parser->getLastError(), "CAMERA");
+            return false;
+        }
+        if (!client->sendTextResponse(parser->getFullPage(), HTTP_FORBIDDEN))
             return false;
         return true;
     }
 
     if (!cam_->getPhoto()) {
         cam_->close();
-        body = "<html><body><h1><font color=\"red\">Fail to get photo</font></h1></body></html>";
-        if (!client->sendTextResponse(body, HTTP_FORBIDDEN))
+        if (!parser->loadFromFile(Path::getInstance().getPath("ErrorPage"))) {
+            log_->error("Load 403.html failed: " + parser->getLastError(), "CAMERA");
+            return false;
+        }
+        if (!client->sendTextResponse(parser->getFullPage(), HTTP_FORBIDDEN))
             return false;
         return true;
     }

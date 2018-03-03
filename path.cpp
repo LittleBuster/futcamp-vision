@@ -31,6 +31,9 @@ Path::Path()
     paths_.insert(make_pair("log", "/var/log/fcvision.log"));
     paths_.insert(make_pair("cfg", "/etc/fcvision.conf"));
     paths_.insert(make_pair("IndexPage", "/usr/share/fcvision/templates/index.html"));
+    paths_.insert(make_pair("PhotoPage", "/usr/share/fcvision/templates/photo.html"));
+    paths_.insert(make_pair("ErrorPage", "/usr/share/fcvision/templates/403.html"));
+    paths_.insert(make_pair("NotFoundPage", "/usr/share/fcvision/templates/404.html"));
 }
 
 Path::~Path()

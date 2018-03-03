@@ -13,14 +13,26 @@
  *****************************************************************************/
 
 #include "notfoundhandler.hpp"
+#include "pageparser.hpp"
+#include "path.hpp"
 
+
+NotFoundHandler::NotFoundHandler(const shared_ptr<ILog> &log):
+                                 log_(std::move(log))
+{
+}
 
 bool NotFoundHandler::process(const shared_ptr<IHttpClient> &client, const string &request)
 {
     (void)request;
-    string body = "<html><h1>404<br>Not Found</h1></html>";
+    auto parser = make_shared<PageParser>();
 
-    if (!client->sendTextResponse(body, HTTP_NOT_FOUND))
+    if (!parser->loadFromFile(Path::getInstance().getPath("NotFoundPage"))) {
+        log_->error("Load 404.html failed: " + parser->getLastError(), "NOT_FOUND");
+        return false;
+    }
+
+    if (!client->sendTextResponse(parser->getFullPage(), HTTP_NOT_FOUND))
         return false;
 
     return true;
