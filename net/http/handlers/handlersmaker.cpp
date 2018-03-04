@@ -2,7 +2,7 @@
  *
  * Future Camp Project
  *
- * Copyright (C) 2017 Sergey Denisov.
+ * Copyright (C) 2017-2018 Sergey Denisov.
  * Written by Sergey Denisov aka LittleBuster (DenisovS21@gmail.com)
  *
  * This library is free software; you can redistribute it and/or
@@ -19,6 +19,7 @@
 #include "syshandler.hpp"
 #include "camhandler.hpp"
 #include "photohandler.hpp"
+#include "fileshandler.hpp"
 
 
 HandlersMaker::HandlersMaker(const shared_ptr<ILog> &log,
@@ -46,6 +47,8 @@ shared_ptr<IHandler> HandlersMaker::makeHandler(const string &name)
         return make_shared<CameraHandler>(log_, cam_);
     if (name == "/photo")
         return make_shared<PhotoHandler>(log_, cfg_, cam_);
+    if (name == "/files")
+        return make_shared<FilesHandler>(log_, cfg_);
 
     return nullptr;
 }

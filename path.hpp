@@ -42,6 +42,14 @@ public:
     const string &getPath(const string &name);
 
     /**
+     * @brief Add new path
+     *
+     * @param name Name of file
+     * @param path Path to file
+     */
+    void addPath(const string &name, const string &path);
+
+    /**
      * @brief Removed contructors
      */
     Path(Path const&) = delete;

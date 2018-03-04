@@ -20,7 +20,7 @@
 using namespace std;
 
 
-#define HANDLERS_COUNT 6
+#define HANDLERS_COUNT 7
 
 
 static string httpHandlers[HANDLERS_COUNT] = {
@@ -29,6 +29,7 @@ static string httpHandlers[HANDLERS_COUNT] = {
     "/sys",
     "/cam",
     "/photo",
+    "/files",
     "/"
 };
 

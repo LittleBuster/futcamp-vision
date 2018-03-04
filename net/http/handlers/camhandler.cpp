@@ -2,7 +2,7 @@
  *
  * Future Camp Project
  *
- * Copyright (C) 2017 Sergey Denisov.
+ * Copyright (C) 2017-2018 Sergey Denisov.
  * Written by Sergey Denisov aka LittleBuster (DenisovS21@gmail.com)
  *
  * This library is free software; you can redistribute it and/or
@@ -64,7 +64,7 @@ bool CameraHandler::process(const shared_ptr<IHttpClient> &client, const string 
     cam_->savePhoto("/tmp/photo" + to_string(cam) + ".jpg");
     cam_->close();
 
-    if (!client->sendImageResponse("/tmp/photo" + to_string(cam) + ".jpg"))
+    if (!client->sendFileResponse("/tmp/photo" + to_string(cam) + ".jpg", HTTP_JPG_FILE))
         return false;
 
     return true;

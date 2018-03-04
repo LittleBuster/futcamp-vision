@@ -92,15 +92,41 @@ bool HttpClient::sendJsonResponse(const string &json)
     return true;
 }
 
-bool HttpClient::sendImageResponse(const string &filename)
+bool HttpClient::sendFileResponse(const string &filename, HttpFileType type)
 {
-    string header = "HTTP/1.1 200 OK\r\n"
-                    "Content-Type: image/png; charset=UTF-8\r\n\r\n";
+    string header;
     char buf[512];
+
+    auto getFileType = [&](HttpFileType type) {
+        switch (type) {
+            case HTTP_CSS_FILE:
+                return "text/css";
+            case HTTP_JS_FILE:
+                return "text/javascript";
+            case HTTP_TXT_FILE:
+                return "text/plain";
+            case HTTP_GIF_FILE:
+                return "image/gif";
+            case HTTP_JPG_FILE:
+                return "image/jpeg";
+            case HTTP_PNG_FILE:
+                return "image/png";
+        }
+        return "text/plain";
+    };
 
     ifstream file(filename, ios::binary);
     if (!file.is_open())
         return false;
+
+    file.seekg(0, ios_base::end);
+
+    header = "HTTP/1.1 200 OK\r\n"
+             "Connection: keep-alive\r\n"
+             "Content-Type: " + string(getFileType(type)) + "; charset=UTF-8\r\n"
+             "Content-Length: " + to_string(file.tellg()) + "\r\n\r\n";
+
+    file.seekg(0, ios_base::beg);
 
     if (!TcpClient::send(header.c_str(), header.size())) {
         file.close();

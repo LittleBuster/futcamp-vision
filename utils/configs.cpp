@@ -45,5 +45,14 @@ bool Configs::loadFromFile(const string &filename)
         error_ = "Fail to read photo height";
         return false;
     }
+
+    if (!reader.readString("Path", "Files", ptc_.files)) {
+        error_ = "Fail to read files path";
+        return false;
+    }
+    if (!reader.readString("Path", "Templates", ptc_.templates)) {
+        error_ = "Fail to read templates path";
+        return false;
+    }
     return true;
 }

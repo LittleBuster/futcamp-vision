@@ -31,6 +31,11 @@ typedef struct {
     unsigned height;
 } PhotoCfg;
 
+typedef struct {
+    string files;
+    string templates;
+} PathCfg;
+
 
 class IConfigs
 {
@@ -38,6 +43,7 @@ public:
     virtual bool loadFromFile(const string &filename) = 0;
     virtual const ServerCfg &getServer() const = 0;
     virtual const PhotoCfg &getPhoto() const = 0;
+    virtual const PathCfg &getPath() const = 0;
     virtual const string &getLastError() const = 0;
 };
 
@@ -70,6 +76,13 @@ public:
     inline const PhotoCfg &getPhoto() const { return pc_; }
 
     /**
+     * @brief Get files configs
+     *
+     * @return Server configs
+     */
+    inline const PathCfg &getPath() const { return ptc_; }
+
+    /**
      * @brief Get last error of loading
      *
      * @return Last error string
@@ -79,6 +92,7 @@ public:
 private:
     ServerCfg sc_;
     PhotoCfg pc_;
+    PathCfg ptc_;
     string error_;
 };
 
