@@ -28,6 +28,15 @@ typedef enum {
     HTTP_NOT_FOUND
 } HttpCode;
 
+typedef enum {
+    HTTP_CSS_FILE,
+    HTTP_JPG_FILE,
+    HTTP_GIF_FILE,
+    HTTP_PNG_FILE,
+    HTTP_JS_FILE,
+    HTTP_TXT_FILE,
+} HttpFileType;
+
 
 class IHttpClient
 {
@@ -35,7 +44,7 @@ public:
     virtual bool recvRequest(string &request) = 0;
     virtual bool sendTextResponse(const string &text, HttpCode code) = 0;
     virtual bool sendJsonResponse(const string &json) = 0;
-    virtual bool sendImageResponse(const string &filename) = 0;
+    virtual bool sendFileResponse(const string &filename, HttpFileType type) = 0;
     virtual void close() = 0;
 };
 
@@ -85,14 +94,14 @@ public:
     bool sendJsonResponse(const string &json);
 
     /**
-     * @brief Sending image response
+     * @brief Sending file response
      *
-     * @param filename Path to image file
+     * @param filename Path to file
      *
      * @return true If response sended
      * @return true If fail to send response
      */
-    bool sendImageResponse(const string &filename);
+    bool sendFileResponse(const string &filename, HttpFileType type);
 
     /**
      * @brief Close connection

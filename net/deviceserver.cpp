@@ -77,6 +77,12 @@ void DeviceServer::newHttpSession(const shared_ptr<IHttpClient> &client)
         return;
     }
 
+    if (request.find("/files") == 0) {
+        if (!handlers_["/files"]->process(client, request))
+            handlers_["/403"]->process(client, request);
+        return;
+    }
+
     if (!splitString(parts, request, "?")) {
         handlers_["/403"]->process(client, request);
         return;

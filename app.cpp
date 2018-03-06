@@ -48,6 +48,13 @@ int App::start()
     log_->info("Configs loaded", "APP");
 
     auto sc = cfg_->getServer();
+    auto ptc = cfg_->getPath();
+
+    Path::getInstance().addPath("IndexPage", ptc.templates + "index.html");
+    Path::getInstance().addPath("PhotoPage", ptc.templates + "photo.html");
+    Path::getInstance().addPath("ErrorPage", ptc.templates + "403.html");
+    Path::getInstance().addPath("NotFoundPage", ptc.templates + "404.html");
+
     server_->setParams(sc.port, sc.users, sc.threaded);
 
     tmanager_->addModule(server_);

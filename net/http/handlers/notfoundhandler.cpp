@@ -2,7 +2,7 @@
  *
  * Future Camp Project
  *
- * Copyright (C) 2017 Sergey Denisov.
+ * Copyright (C) 2017-2018 Sergey Denisov.
  * Written by Sergey Denisov aka LittleBuster (DenisovS21@gmail.com)
  *
  * This library is free software; you can redistribute it and/or
@@ -12,27 +12,27 @@
  *
  *****************************************************************************/
 
-#include "errhandler.hpp"
+#include "notfoundhandler.hpp"
 #include "pageparser.hpp"
 #include "path.hpp"
 
 
-ErrorHandler::ErrorHandler(const shared_ptr<ILog> &log):
-                           log_(std::move(log))
+NotFoundHandler::NotFoundHandler(const shared_ptr<ILog> &log):
+                                 log_(std::move(log))
 {
 }
 
-bool ErrorHandler::process(const shared_ptr<IHttpClient> &client, const string &request)
+bool NotFoundHandler::process(const shared_ptr<IHttpClient> &client, const string &request)
 {
     (void)request;
     auto parser = make_shared<PageParser>();
 
-    if (!parser->loadFromFile(Path::getInstance().getPath("ErrorPage"))) {
-        log_->error("Load 403.html failed: " + parser->getLastError(), "ERROR");
+    if (!parser->loadFromFile(Path::getInstance().getPath("NotFoundPage"))) {
+        log_->error("Load 404.html failed: " + parser->getLastError(), "NOT_FOUND");
         return false;
     }
 
-    if (!client->sendTextResponse(parser->getFullPage(), HTTP_FORBIDDEN))
+    if (!client->sendTextResponse(parser->getFullPage(), HTTP_NOT_FOUND))
         return false;
 
     return true;
