@@ -41,8 +41,6 @@ bool FilesHandler::process(const shared_ptr<IHttpClient> &client, const string &
             return HTTP_CSS_FILE;
         if (extension == "png")
             return HTTP_PNG_FILE;
-        if (extension == "gif")
-            return HTTP_GIF_FILE;
         if (extension == "txt" || extension == "conf" || extension == "cfg"
                                || extension == "html" || extension == "htm")
             return HTTP_TXT_FILE;
