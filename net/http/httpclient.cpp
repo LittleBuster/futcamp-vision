@@ -122,7 +122,7 @@ bool HttpClient::sendFileResponse(const string &filename, HttpFileType type)
     file.seekg(0, ios_base::end);
 
     header = "HTTP/1.1 200 OK\r\n"
-             "Connection: keep-alive\r\n"
+             "Connection: Keep-Alive\r\n"
              "Content-Type: " + string(getFileType(type)) + "; charset=UTF-8\r\n"
              "Content-Length: " + to_string(file.tellg()) + "\r\n\r\n";
 
@@ -134,12 +134,12 @@ bool HttpClient::sendFileResponse(const string &filename, HttpFileType type)
     }
 
     while (!file.eof()) {
-        usleep(100);
         file.read(buf, 512);
         if (!TcpClient::send(buf, 512)) {
             file.close();
             return false;
         }
+        usleep(100);
     }
 
     file.close();
